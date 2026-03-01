@@ -1,20 +1,32 @@
 import std/[httpclient, json]
+import osproc
 
 # 1. Initialize the client
 let client = newHttpClient()
 
 try:
+  let alias = "hello"
+  let baseUrl = "https://raw.githubusercontent.com/jbangdev/jbang-catalog/refs/heads/main"
+
   # 2. Retrieve the content
-  let url = "https://raw.githubusercontent.com/jbangdev/jbang-catalog/refs/heads/main/jbang-catalog.json"
+  let url = baseUrl & "/" & "jbang-catalog.json"
   let response = client.getContent(url)
 
   # 3. Parse the JSON string
   let data = parseJson(response)
 
   # 4. Access fields
-  let scriptRef = data["aliases"]["jbang-fmt"]["script-ref"].getStr()
+  let scriptRef = data["aliases"][alias]["script-ref"].getStr()
+  let scriptUrl = baseUrl & "/" & scriptRef
+  let scriptText = client.getContent(scriptUrl)
+  let filename = scriptRef
+  writeFile(filename, scriptText)
 
-  echo "script-ref for jbang-fmt is ", scriptRef
+  echo "script-ref for " & alias & " is ", scriptRef
+
+  echo scriptText
+
+  let exitCode = execCmd("java " & filename & " John")
 
 finally:
   client.close()
