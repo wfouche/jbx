@@ -22,10 +22,6 @@ try:
   let filename = scriptRef
   writeFile(filename, scriptText)
 
-  echo "script-ref for " & alias & " is ", scriptRef
-
-  echo scriptText
-
   let exitCode = execCmd("java " & filename & " John")
 
 finally:
