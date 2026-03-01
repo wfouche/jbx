@@ -22,7 +22,7 @@ try:
   let filename = scriptRef
   writeFile(filename, scriptText)
 
-  let exitCode = execCmd("java " & filename & " John")
+  discard execCmd("java " & filename & " John")
 
 finally:
   client.close()
