@@ -26,6 +26,5 @@ try:
   writeFile(filename, scriptText)
 
   discard execCmd("java " & filename & " " & paramStr(2))
-
 finally:
   client.close()
