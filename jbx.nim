@@ -1,7 +1,7 @@
 import std/[httpclient, json]
-import osproc
-import strutils
-import std/cmdline
+from osproc import execCmd
+from strutils import split
+from std/cmdline import paramStr
 
 # 1. Initialize the client
 let client: HttpClient = newHttpClient()
